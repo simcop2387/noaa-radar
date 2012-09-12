@@ -77,6 +77,11 @@ get '/noaa/:radarcode' => sub {
          my ($radar, $county, $warning, $legend) = map {gif_to_img $_} @{$layer_hash}{qw(radar county warning legend)};
          my $img = Image::Magick->new();
          
+         # filter noise from the radar
+         for my $c (qw[rgb(3,0,244) rgb(1,159,244) rgb(4,233,231) rgb(100,100,100) rgb(153,153,102) rgb(204,204,153)]) {
+           $radar->Opaque(fill => 'white', color => $c);
+         }
+         
          $img->[0] = $radar;
          $img->[1] = $county;
          $img->[2] = $warning;
