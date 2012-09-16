@@ -7,6 +7,7 @@ use Image::Magick;
 our $VERSION = '0.1';
 
 my $ua = LWP::UserAgent->new();
+ $ua->proxy(['http'], 'http://127.0.0.1:13128/');
 # TODO setup a proxy thing here, i want to cache images that won't change from the NOAA, like the county images etc.
 
 sub ua_get {
