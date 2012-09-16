@@ -74,7 +74,7 @@ get '/noaa/:radarcode' => sub {
        $master_image->Set(loop => 1);
        
        for my $layer_hash (@image_content) {
-         my ($radar, $county, $warning, $legend) = map {gif_to_img $_} @{$layer_hash}{qw(radar county warning legend)};
+         my ($radar, $county, $warning, $legend, $river, $city, $highway) = map {gif_to_img $_} @{$layer_hash}{qw(radar county warning legend rivers city highway)};
          my $img = Image::Magick->new();
          
          # filter noise from the radar
@@ -82,10 +82,13 @@ get '/noaa/:radarcode' => sub {
            $radar->Opaque(fill => 'white', color => $c);
          }
          
-         $img->[0] = $radar;
-         $img->[1] = $county;
-         $img->[2] = $warning;
-         $img->[3] = $legend;
+         push @{$img}, $radar,
+                       $county,
+                       $highway,
+                       $river,
+                       $city,
+                       $warning,
+                       $legend;
          $img->Set(background => '#fff');
          $img = $img->Flatten();
          
@@ -98,6 +101,7 @@ get '/noaa/:radarcode' => sub {
        $gif_data = img_to_gif($master_image);
      }
      
+     header('Cache-Control' => 'max-age=600');
      header('Content-Type' => 'image/gif');
      return $gif_data;
    }
