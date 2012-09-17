@@ -88,12 +88,11 @@ get '/noaa/:radarcode' => sub {
          }
          
 
-         $city->invert();
+         $city->negate();
 
          push @{$img}, $radar,
                        $county,
                        $highway,
-#                       $river,
                        $city,
                        $warning,
                        $legend;
