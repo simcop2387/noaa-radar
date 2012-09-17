@@ -47,7 +47,7 @@ get '/noaa/:radarcode' => sub {
    my $noaa_base = 'http://radar.weather.gov/ridge/';
    my $tmp_dir = '/tmp/noaa_build';
    
-   my $radarcode = params->{radarcode};
+   my $radarcode = lc params->{radarcode}; # make it lc since that's what noaa wants
    $radarcode =~ s/\.gif$//i;
    
    my $resp = $ua->get($noaa_base . $radarcode. '_NCR_overlayfiles.txt');
