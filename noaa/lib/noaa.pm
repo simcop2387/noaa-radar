@@ -3,6 +3,7 @@ use Dancer ':syntax';
 use LWP::UserAgent;
 use Data::Dumper;
 use Image::Magick;
+use HTTP::Date;
 
 our $VERSION = '0.1';
 
@@ -103,6 +104,7 @@ get '/noaa/:radarcode' => sub {
      }
      
      header('Cache-Control' => 'max-age=600');
+     header('Expires' => time2str(time()+600));
      header('Content-Type' => 'image/gif');
      return $gif_data;
    }
