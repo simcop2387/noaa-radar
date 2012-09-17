@@ -87,10 +87,13 @@ get '/noaa/:radarcode' => sub {
            $radar->Opaque(fill => 'white', color => $c);
          }
          
+
+         $city->invert();
+
          push @{$img}, $radar,
                        $county,
                        $highway,
-                       $river,
+#                       $river,
                        $city,
                        $warning,
                        $legend;
