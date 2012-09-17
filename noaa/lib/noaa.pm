@@ -50,7 +50,7 @@ get '/noaa/:radarcode' => sub {
    my $radarcode = params->{radarcode};
    $radarcode =~ s/\.gif$//i;
    
-   my $resp = $ua->get($noaa_base . params->{radarcode}. '_NCR_overlayfiles.txt');
+   my $resp = $ua->get($noaa_base . $radarcode. '_NCR_overlayfiles.txt');
 
    if ($resp->is_success) {
      my $csv_data = $resp->content();
