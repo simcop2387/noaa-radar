@@ -88,7 +88,7 @@ get '/noaa/:radarcode' => sub {
          }
          
 
-         $city->negate();
+         $city->Negate();
 
          push @{$img}, $radar,
                        $county,
